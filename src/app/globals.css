@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* 🎨 Global theme variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* ✅ Tailwind v4 inline theme config */
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* ✅ Font Families — connect Tailwind utilities to Next.js font variables */
+  --font-sans: var(--font-satoshi), sans-serif;
+  --font-integral: var(--font-integral), sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+/* 🌙 Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #171717;
+    --foreground: #ededed;
+  }
+}
+
+/* ✨ Base styles */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-satoshi), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
