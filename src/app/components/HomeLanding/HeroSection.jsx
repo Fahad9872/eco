@@ -1,11 +1,11 @@
 "use client";
-
 import React from "react";
 // Framer Motion is the standard for high-quality, declarative animations in Next.js
 import { motion } from "framer-motion";
 // Importing assets for potential background/decorative elements (kept for completeness)
 import HeorSectionBG from "../../assets/HomeLanding/Rectangle 2.png";
 import StarVector from "../../assets/HomeLanding/Vector.svg";
+import Carousel from "react-elastic-carousel";
 
 // 1. Placeholder URL for the Models Image (MUST be the correct image URL in a real project)
 // In a real Next.js/React project, you'd import the image file directly, like:
@@ -51,18 +51,19 @@ export default function HeroSection() {
   // Data for the brand logos
   const brands = ["VERSACE", "ZARA", "GUCCI", "PRADA", "Calvin Klein"];
 
+  const breakPoints = [
+    { width: 1, itemsToShow: 2 }, // mobile
+    { width: 640, itemsToShow: 3 }, // small tablets
+    { width: 1024, itemsToShow: 5 }, // desktop
+  ];
+
   return (
     // Removed min-h-screen to prevent extra space. Used py-12 for overall top/bottom padding.
     <div className="bg-[#F2F0F1] font-sans">
-      {/* Main Hero Section Container (max-width and centered) */}
-      {/* Increased max-w to match the wide content look of the image */}
       <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        <div className="relative overflow-hidden">
-          {/* Flex Container for Left Content and Right Image */}
-          <div className="flex flex-col lg:flex-row items-stretch justify-between">
-            {/* --- Left Side: Content & Stats (Animated Container) --- */}
-            {/* Adjusted width to lg:w-[55%] to give the image more space, and increased padding */}
-            <div className="lg:w-[55%] w-full mb-12 lg:mb-0 pt-10 pb-40 lg:pr-24">
+        <div className="md:relative overflow-hidden">
+          <div className="lg:flex lg:flex-row lg:items-stretch justify-between">
+            <div className="lg:w-[55%] w-full mb-12 lg:mb-0 pt-10 lg:pb-40 lg:pr-24">
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -73,7 +74,7 @@ export default function HeroSection() {
                   // Increased font size significantly, adjusted line-height for stacked text.
                   // The font looks like 'Integral CF' or similar heavy, condensed sans-serif.
                   // Use a class that mimics this style, e.g., a very heavy weight.
-                  className="text-[48px]  md:text-[66px] tracking-tighter font-integral font-bold leading-[1.1] leading-[50px] text-gray-900 mb-6 uppercase tracking-tight"
+                  className="text-[36px]  md:text-[66px] tracking-tighter font-integral font-bold leading-[1.1]  md:leading-[50px] leading-[30px] text-gray-900 md:mb-[32px] mb-[20px] uppercase tracking-tight"
                   variants={itemVariants}
                 >
                   FIND CLOTHES <br /> THAT MATCHES <br /> YOUR STYLE
@@ -81,18 +82,18 @@ export default function HeroSection() {
 
                 {/* Description */}
                 <motion.p
-                  className="text-base md:text-lg text-gray-700 mb-10 max-w-lg"
+                  className="text-[14px]  font-normal md:text-[16px] text-gray-500 mb-[32px] max-w-lg"
                   variants={itemVariants}
                 >
                   Browse through our diverse range of meticulously crafted
-                  garments, designed to bring out your **individuality** and
-                  cater to your sense of **style**.
+                  garments, designed to bring out your individuality and cater
+                  to your sense of style.
                 </motion.p>
 
                 {/* Shop Now Button */}
                 <motion.button
                   // Adjusted button to match the image: black background, white text, full roundness.
-                  className="px-12 w-[210px] py-4 text-[16px] font-medium bg-black text-white rounded-full shadow-xl hover:bg-gray-800 transition duration-300"
+                  className="px-12 w-[210px] h-[50px] text-[16px] font-medium bg-black text-white rounded-full shadow-xl hover:bg-gray-800 transition duration-300 mb-[48px]"
                   variants={itemVariants}
                   onClick={() => console.log("Shop Now clicked")}
                 >
@@ -100,16 +101,28 @@ export default function HeroSection() {
                 </motion.button>
 
                 {/* Stats Block (Staggered inside the main container) */}
-                <motion.div
-                  // Adjusted mt to match the large gap in the image, and used justify-start for alignment.
-                  className="mt-20 flex flex-col sm:flex-row gap-12 sm:gap-16 lg:gap-20 justify-start"
-                  // This motion.div inherits stagger control from the parent, but we apply itemVariants to the children
-                >
-                  {stats.map((stat) => (
+                <motion.div className="grid grid-cols-2 sm:flex sm:flex-row sm:justify-start sm:gap-0 ml-[-20px]">
+                  {stats.map((stat, index) => (
                     <motion.div
                       key={stat.value}
-                      className="flex flex-col"
                       variants={itemVariants}
+                      className={`
+        flex flex-col items-start py-4 sm:py-0 px-8
+
+        ${
+          // ✅ Mobile: Only first item gets border-r
+          index === 0 ? "border-r border-gray-400/60" : ""
+        }
+
+        ${
+          // ✅ Desktop: All except last get border-r
+          index < stats.length - 1
+            ? "sm:border-r sm:border-gray-400/60"
+            : "sm:border-none"
+        }
+
+        ${index === 2 ? "col-span-2 justify-self-center sm:col-span-1" : ""}
+      `}
                     >
                       <span className="text-3xl md:text-4xl font-extrabold text-gray-900">
                         {stat.value}
@@ -123,29 +136,18 @@ export default function HeroSection() {
               </motion.div>
             </div>
 
-            {/* --- Right Side: Image (Single Fade-In) --- */}
-            {/* Adjusted width to lg:w-[45%] and used absolute positioning for image to overlap the footer and align to the right edge */}
             <motion.div
-              className="lg:w-[45%]  lg:h-auto overflow-visible"
+              className="lg:w-[45%]   lg:h-auto overflow-visible"
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
             >
-              {/* The image container should manage the photo */}
               <div className="relative w-full h-full">
-                {/* The main model image, positioned to cover the height and align to the bottom of its main section, then overlaps the footer */}
                 <img
                   src={MODELS_IMAGE_URL}
                   alt="Two models wearing modern, stylish clothes."
-                  // Use object-cover to make the image fill the container without distortion
-                  // Use w-full and h-full to fill the space
-                  // Use absolute positioning with 'bottom-0' and 'right-0' to align it correctly
-                  className="md:w-full md:h-full "
-                  style={{
-                    // This min-height is a hack to ensure the image container is tall enough on desktop
-                    // to match the visual height of the original image, pushing the footer into view.
-                    minHeight: "800px",
-                  }}
+                  className="md:w-fit md:h-[550px] "
+                  style={{}}
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src =
@@ -155,7 +157,7 @@ export default function HeroSection() {
 
                 {/* Decorative Star/Sparkle Elements (Styled to match the image's star vector) */}
                 <motion.div
-                  className="absolute top-[8%] right-[8%] text-black w-20 h-20 md:w-24 md:h-24"
+                  className="absolute top-[8%] md:right-[8%] right-[5%] text-black w-20 h-20 md:w-24 md:h-24"
                   // Using a simple SVG path for the star shape as StarVector.src is inaccessible
                   animate={{ scale: [1, 1.1, 1], rotate: [0, 15, 0] }}
                   transition={{ duration: 3, repeat: Infinity }}
@@ -176,7 +178,7 @@ export default function HeroSection() {
 
                 {/* Second Decorative Star/Sparkle Element */}
                 <motion.div
-                  className="absolute bottom-[40%] left-[5%] text-black w-12 h-12 md:w-16 md:h-16"
+                  className="absolute md:bottom-[20%] bottom-[28%] md:left-[-10%] text-black w-12 h-12 md:w-16 md:h-16"
                   animate={{ scale: [1, 1.2, 1], rotate: [45, 60, 45] }}
                   transition={{ duration: 4, repeat: Infinity, delay: 1 }}
                 >
@@ -199,17 +201,29 @@ export default function HeroSection() {
       </div>
       {/* --- Brand Logos Footer --- */}
       <motion.div
-        className="w-full bg-black py-6 md:py-8 relative z-20"
+        className="w-full bg-black py-6 md:py-8 relative z-20 lg:mt-[-120px]"
         // The margin-top property is crucial to overlap the image and the rest of the white section
-        style={{ marginTop: "-120px" }} // Increased negative margin to pull up significantly over the image base
+
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
       >
-        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Used justify-around for even spacing */}
-          <div className="flex flex-wrap justify-around items-center gap-4 md:gap-8">
+        <div className="max-w-[1700px] mx-auto px-4">
+          <Carousel
+            breakPoints={breakPoints}
+            enableAutoPlay
+            autoPlaySpeed={2000}
+            pagination={false}
+            showArrows={false}
+          >
             {brands.map((brand) => (
+              // <div key={logo.id} className="flex justify-center px-4">
+              //   <img
+              //     src={logo.src}
+              //     alt="logo"
+              //     className="h-12 w-auto object-contain grayscale hover:grayscale-0 transition"
+              //   />
+              // </div>
               <div
                 key={brand}
                 // Ensured text size is large, font-weight is bold, and tracking is wide
@@ -218,7 +232,8 @@ export default function HeroSection() {
                 {brand}
               </div>
             ))}
-          </div>
+          </Carousel>
+          {/* Used justify-around for even spacing */}
         </div>
       </motion.div>
     </div>
