@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import cloth from "../../assets/HomeLanding/cloth.svg";
+import Image from "next/image";
 
 // --- Animation Variants ---
 const containerVariants = {
@@ -213,7 +214,9 @@ const ProductCard = ({
     >
       {/* Image Container */}
       <div className="bg-[#F2F0F1] h-80 flex items-center justify-center rounded-lg overflow-hidden mb-3">
-        <img
+        <Image
+          height={0}
+          width={0}
           src={imageUrl || "/path/to/placeholder-image.jpg"}
           alt={name}
           className="object-cover h-full w-full"
@@ -318,7 +321,7 @@ export default function ProductGridSection() {
 
   return (
     <section className="py-10 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* NEW ARRIVALS Section */}
         {renderSection("NEW ARRIVALS", newArrivalsData)}
 
