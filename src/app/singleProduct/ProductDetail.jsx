@@ -44,12 +44,7 @@ const StarRating = ({ rating }) => {
 
 
 // --- Main Product Detail Component ---
-// const ProductD
-
-
-
-
-etail = () => {
+const ProductDetail = () => {
     // --- State Management ---
     const [selectedColor, setSelectedColor] = useState(product.colors[0].code);
     const [selectedSize, setSelectedSize] = useState(product.sizes[2]); // Default to 'Large'
