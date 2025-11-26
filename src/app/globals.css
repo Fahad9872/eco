@@ -2,8 +2,8 @@
 
 /* 🎨 Global theme variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --background: #ffffff;
+  --foreground: #171717; */
 }
 
 /* ✅ Tailwind v4 inline theme config */
@@ -21,14 +21,14 @@
 /* 🌙 Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #171717;
-    --foreground: #ededed;
+    /* --background: #171717;
+    --foreground: #ededed; */
   }
 }
 
 /* ✨ Base styles */
 body {
-  background: var(--background);
+  /* background: var(--background); */
   color: var(--foreground);
   font-family: var(--font-satoshi);
   -webkit-font-smoothing: antialiased;
