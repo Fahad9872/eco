@@ -59,8 +59,8 @@ export default function HeroSection() {
 
   return (
     // Removed min-h-screen to prevent extra space. Used py-12 for overall top/bottom padding.
-    <div className="bg-[#F2F0F1] font-sans">
-      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+    <div className="bg-[#F2F0F1] font-sans md:-mt-20 mt-0">
+      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 md:pt-50 pt-0">
         <div className="md:relative overflow-hidden">
           <div className="lg:flex lg:flex-row lg:items-stretch justify-between">
             <div className="lg:w-[55%] w-full mb-12 lg:mb-0 pt-10 lg:pb-40 lg:pr-24">

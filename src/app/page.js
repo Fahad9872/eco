@@ -9,7 +9,7 @@ import MainFooter from "./components/HomeLanding/MainFooter";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="pt-20">
       <HeroSection />
       {/* <NewArrivals/> */}
       <ComplexImageGridSection />

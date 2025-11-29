@@ -3,6 +3,7 @@
 import "./globals.css";
 import Navbar from "./components/Navbar/page";
 import { geistMono, geistSans, integralCF, satoshi } from "./fonts";
+import ScrollBar from "./components/ScrollBar/ScrollBar";
 // Import all the font definitions from your new fonts.js file
 
 export const metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         className={`antialiased`} // Keep only global body styles here
       >
         <div className="max-w-11/12 mx-auto">
+          <ScrollBar />
           <Navbar></Navbar>
         </div>
         {children}
